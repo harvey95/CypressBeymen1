@@ -205,6 +205,7 @@ class BotPage {
     cy.get(this.urunSepettenSilindiText).eq(0).should('have.text','Ürün Silindi')
     // Burada cy.get ile yazılmasının nedeni eq methodu'dur, eğer eq() methodu varsa bu şekilde kulllanılması gerekiyor
     // baseSteps'ten çagırdıgımda hata alıyorum.
+    //deneme1 github
 
   }
   

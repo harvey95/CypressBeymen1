@@ -55,3 +55,9 @@ function dropdownCY(element,option){
   cy.get(element).select(option).should('have.value',option)
 }
 export {dropdownCY}
+
+function invokeTargetBlankCy(element){
+  cy.get(element).invoke('removeAttr','target').click()
+}
+export {invokeTargetBlankCy}
+

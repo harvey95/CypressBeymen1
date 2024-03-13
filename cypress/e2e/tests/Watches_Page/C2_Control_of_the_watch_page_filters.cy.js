@@ -6,6 +6,8 @@ import userData from "../../../fixtures/userData.json";
 describe("Watches Page", () => {
   beforeEach("visit to url", () => {
    // cy.loginSession(userData.email, userData.password);
+   // Session'da sıkıntı çıkıyor, muhtemelen beymen sitesi güvenlik sebebiyle yapıyor. Çünkü daha önceden session çalışıyordu.
+   
   });
 
   it.only("C2 Azalan Fiyata Göre Doğrula", () => {

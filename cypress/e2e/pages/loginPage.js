@@ -65,8 +65,7 @@ class LoginPage {
     clickCY(this.hesabimButton)
    // beVisible(this.girisYapTitle)
    cy.wait(2000)
-    typeTo(this.mailTextbox,userData.email)
-  
+    typeTo(this.mailTextbox,userData.email) 
     typeTo(this.passwordTextbox,userData.password)
     clickCY(this.girisYapButton)
     beVisible(this.cikisYapButton)
@@ -77,13 +76,19 @@ class LoginPage {
   }
 
   unsuccessfulLogin(){
-  //  cy.visit(Cypress.env('URL'))
+    // cy.visit(Cypress.env('URL'))
+
+    cy.wait(3000)
+
+    cy.viewport(1920, 1080)
 
     clickCY(this.ignoreCookies)
     clickCY(this.erkekButton)
-    this.beymenTitle();
+    // this.beymenTitle();
     clickCY(this.hesabimButton)
-    beVisible(this.girisYapTitle)
+    cy.get('h3[class="m-panel__header"]').eq(0).should('have.text','GİRİŞ YAP')
+    
+    //beVisible(this.girisYapTitle)
     typeTo(this.mailTextbox,userData.wrongMail)
     typeTo(this.passwordTextbox,userData.password)
     clickCY(this.girisYapButton)

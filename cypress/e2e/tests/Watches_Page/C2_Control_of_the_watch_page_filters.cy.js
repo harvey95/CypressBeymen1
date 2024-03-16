@@ -1,5 +1,7 @@
 import WatchesPage from "../../pages/WatchesPage";
-import userData from "../../../fixtures/userData.json";
+import userData from "../../../fixtures/userData.json"
+import LoginPage from "../../pages/loginPage"
+import { clickCY } from "../../../support/baseSteps";
 
 
 

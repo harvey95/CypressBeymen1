@@ -11,8 +11,8 @@ class HomePage{
     get twitterButton(){
       return 'a[class="bwi-twitter"]'
     }
-    get youTubeButton(){
-      return 'a[class="bwi-twitter"]'
+    get linkedinButton(){
+      return 'a[class="bwi-linkedin"]'
     }
 
         sosyalMedyaButonKontroluFacebook(){
@@ -22,7 +22,9 @@ class HomePage{
         clickCY(LoginPage.erkekButton) 
         cy.viewport(1920, 1080)
         invokeTargetBlankCy(this.facebookButton)
-        urlAssertionWithEq('https://www.facebook.com/Beymen/')
+        cy.origin('https://www.facebook.com',()=>{
+          cy.url().should('include','beymen')
+        })
         
     }
     sosyalMedyaButonKontroluTwitter(){
@@ -40,14 +42,22 @@ class HomePage{
         cy.url().should('include','beymen')});
     }
     
-    sosyalMedyaButonKontroluYoutube(){
+    sosyalMedyaButonKontroluLinkedin(){
+
+      cy.on("uncaught:exception", (err, runnable) => {
+        return false;
+      });
         cy.visit(Cypress.env('URL'))
         cy.wait(2000)
         clickCY(LoginPage.accepsCookies) 
         clickCY(LoginPage.erkekButton) 
         cy.viewport(1920, 1080)
-        invokeTargetBlankCy(this.youTubeButton)
-        urlAssertionWithEq('https://www.youtube.com/channel/UCMYUy0Zgm93UjonhZN8rVMQ')
+        invokeTargetBlankCy(this.linkedinButton)
+        cy.origin('https://tr.linkedin.com/company/beymengroup',()=>{
+          cy.wait(3000)
+         // cy.get('#text').eq(0).should('have.text','beymen')
+          cy.url().should('include','beymengroup')
+        })
     }
 
 

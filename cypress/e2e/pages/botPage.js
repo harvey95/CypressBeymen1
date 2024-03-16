@@ -1,4 +1,4 @@
-import { beVisible, clickCY, haveText, mouseOver, rightClickCY, shouldNotExist, dropdownCY } from "../../support/baseSteps";
+import { beVisible, clickCY, haveText, mouseOver, rightClickCY, shouldNotExist, dropdownCY, typeTo, shouldHaveLength } from "../../support/baseSteps";
 import WatchesPage from "./WatchesPage";
 import LoginPage from "../../e2e/pages/loginPage"
 
@@ -89,6 +89,17 @@ class BotPage {
     return 'h4#notifyTitle'
   }
   
+  get sadeceIndirimliUrunlerToggleButton(){
+    return '[type="checkbox"]'
+  }
+
+  get filtrelerMenusundeSearchBar(){
+    return 'input#productFilterSearchInput'
+  }
+
+  get filtrelerMenusundeAcademiaCheckbox(){
+    return '[class="m-checkbox__label"]'
+  }
 
   favorilereEkleButonununKontrolu(){
     cy.visit(Cypress.env("URL"));
@@ -97,8 +108,28 @@ class BotPage {
     clickCY(LoginPage.ignoreCookies) 
     clickCY(LoginPage.erkekButton) 
 
-    this.botVaryasyonKontrolu()
+    rightClickCY(WatchesPage.erkekButton) 
+    rightClickCY (this.ayakkabiTab)
+    clickCY(this.botButton)
+    cy.wait(2500);
+    mouseOver(this.firstShoeSizeButtons)
+    cy.wait(2000)
+    cy.get(this.size42).first().each(($el)=>{
+      const text = $el.text().trim()
+      if (text =='42'||'43'||'44'||'45'||'46'){
+         cy.wrap($el).contains(text).click({force: true})
+      }
 
+    })
+
+  cy.get(this.itemVaryasyonlari).each(($el, index, $list) => {
+      if ($el.is(":enabled")) {
+        cy.wrap($el).click();
+      } else if (index < $list.length - 1) {
+          cy.wrap($list[index + 1]).click()
+          
+      }
+    });
     cy.get(this.firstFavoriteButton).within(()=>{ // within child olan taga erişmemizi sağlar.
       cy.get('span').should('contain.text','FAVORİLERE EKLE')
     })
@@ -207,6 +238,46 @@ class BotPage {
     // baseSteps'ten çagırdıgımda hata alıyorum.
     //deneme1 github
 
+  }
+
+  sadeceIndilimiUrunlerToggleKontrol(){
+
+    cy.visit(Cypress.env("URL"));
+
+    cy.wait(2000)
+    clickCY(LoginPage.accepsCookies) 
+    clickCY(LoginPage.erkekButton) 
+    cy.viewport(1920, 1080)
+    rightClickCY(WatchesPage.erkekButton) 
+    rightClickCY (this.ayakkabiTab)
+    clickCY(this.botButton)
+
+    clickCY(WatchesPage.filtreler)
+    cy.get(this.sadeceIndirimliUrunlerToggleButton).eq(0).check({force:true}) // yine eq kullandığımız için elementi bu şekilde locate aldık
+    cy.get(this.sadeceIndirimliUrunlerToggleButton).eq(0).should('be.checked')
+    cy.get(this.sadeceIndirimliUrunlerToggleButton).eq(0).uncheck({force:true})
+    cy.get(this.sadeceIndirimliUrunlerToggleButton).eq(0).should('not.be.checked')
+
+  }
+
+  filtrelerMenusundeSearchBarKontrolu(){
+    cy.visit(Cypress.env("URL"));
+
+    cy.wait(2000)
+    clickCY(LoginPage.accepsCookies) 
+    clickCY(LoginPage.erkekButton) 
+    cy.viewport(1920, 1080)
+    rightClickCY(WatchesPage.erkekButton) 
+    rightClickCY (this.ayakkabiTab)
+    clickCY(this.botButton)
+    clickCY(WatchesPage.filtreler)
+    shouldHaveLength(this.filtrelerMenusundeAcademiaCheckbox,70)
+    typeTo(this.filtrelerMenusundeSearchBar,'Academia')
+    shouldHaveLength(this.filtrelerMenusundeAcademiaCheckbox,1)
+    haveText(this.filtrelerMenusundeAcademiaCheckbox,'Academia')
+
+    // cy.get(this.filtrelerMenusundeAcademiaCheckbox).should('have.length',70)
+    // cy.get(this.filtrelerMenusundeAcademiaCheckbox).should('have.length',1)
   }
   
   

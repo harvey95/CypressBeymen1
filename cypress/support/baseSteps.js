@@ -61,3 +61,8 @@ function invokeTargetBlankCy(element){
 }
 export {invokeTargetBlankCy}
 
+function shouldHaveLength(element,element2){
+  cy.get(element).should('have.length',element2)
+}
+export {shouldHaveLength}
+
